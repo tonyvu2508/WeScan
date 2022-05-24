@@ -60,7 +60,7 @@ public final class ImageScannerController: UINavigationController {
         return .portrait
     }
     
-    public required init(image: UIImage? = nil, delegate: ImageScannerControllerDelegate? = nil) {
+    public required init(image: UIImage? = nil, delegate: ImageScannerControllerDelegate? = nil, points: NSArray? = nil, resizeWidth: CGFloat? = CGFloat(340), resizeHeight: CGFloat? = CGFloat(240)) {
         super.init(rootViewController: ScannerViewController())
         
         self.imageScannerDelegate = delegate
@@ -71,16 +71,35 @@ public final class ImageScannerController: UINavigationController {
             navigationBar.tintColor = .black
         }
         navigationBar.isTranslucent = false
+        navigationBar.backgroundColor = UIColor.white
         self.view.addSubview(blackFlashView)
         setupConstraints()
         
         // If an image was passed in by the host app (e.g. picked from the photo library), use it instead of the document scanner.
+//        if let image = image {
+//            detect(image: image) { [weak self] detectedQuad in
+//                guard let self = self else { return }
+//                    let editViewController = EditScanViewController(image: image, quad: detectedQuad, rotateImage: false)
+//                    self.setViewControllers([editViewController], animated: false)
+//            }
+//        }
         if let image = image {
-            detect(image: image) { [weak self] detectedQuad in
-                guard let self = self else { return }
-                let editViewController = EditScanViewController(image: image, quad: detectedQuad, rotateImage: false)
-                self.setViewControllers([editViewController], animated: false)
+            let ratioX = image.size.width / resizeWidth!;
+            let ratioY = image.size.height / resizeHeight!;
+            
+            if(points?.count ?? 0 > 0){
+                let pointTopLeft = points?[0] as! NSArray;
+                let pointTopRight = points?[1] as! NSArray;
+                let pointBottomRight = points?[2] as! NSArray;
+                let pointBottomLeft = points?[3] as! NSArray;
+                
+                let detectedQuad = Quadrilateral(topLeft: CGPoint(x: pointTopLeft[0] as! CGFloat * ratioX, y: pointTopLeft[1] as! CGFloat * ratioY), topRight: CGPoint(x: pointTopRight[0] as! CGFloat * ratioX, y: pointTopRight[1] as! CGFloat * ratioY), bottomRight: CGPoint(x: pointBottomRight[0] as! CGFloat * ratioX, y: pointBottomRight[1] as! CGFloat * ratioY), bottomLeft: CGPoint(x: pointBottomLeft[0] as! CGFloat * ratioX, y: pointBottomLeft[1] as! CGFloat * ratioY))
+                
+                    let editViewController = EditScanViewController(image: image, quad: detectedQuad, rotateImage: false)
+                    self.setViewControllers([editViewController], animated: false)
             }
+            
+            
         }
     }
 
