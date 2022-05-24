@@ -13,7 +13,7 @@
 "wescan.edit.title" = "Upravit";
 
 /* The title on the navigation bar of the Review screen. */
-"wescan.review.title" = "Náhled";
+"wescan.review.title" = "Okraje";
 
 /* The button titles on the Scanning screen. */
 "wescan.scanning.cancel" = "Zpět";
