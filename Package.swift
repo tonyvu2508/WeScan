@@ -4,7 +4,7 @@ import PackageDescription
 
 let package = Package(
     name: "WeScan",
-    defaultLocalization: "en",
+    defaultLocalization: "ja",
     platforms: [
         .iOS(.v12)
     ],
