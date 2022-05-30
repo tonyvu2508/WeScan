@@ -10,7 +10,7 @@ Pod::Spec.new do |spec|
     'Boris Emorine' => 'boris@wetransfer.com',
     'Antoine van der Lee' => 'antoine@wetransfer.com'
   }
-  spec.source           = { :git => 'https://github.com/tonyvu2508/WeScan.git' }
+  spec.source           = { :git => 'https://github.com/tonyvu2508/WeScan.git', branch: 'Jara' }
   spec.social_media_url = 'https://twitter.com/WeTransfer'
 
   spec.swift_version = '5.0'
